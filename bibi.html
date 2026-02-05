@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>For Bibi ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5dce0, #f8e7ea);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #3a2d2d;
+        }
+
+        /* Splash Screen */
+        #splash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f8e7ea;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+        }
+
+        /* Floating elements */
+        .floating {
+            position: fixed;
+            bottom: -50px;
+            font-size: 20px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 1; }
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .scroll {
+            max-width: 600px;
+            width: 100%;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 26px;
+            padding: 40px 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.45);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            display: none; /* Hidden until splash is clicked */
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: #b23a48;
+            margin-bottom: 15px;
+        }
+
+        .heart-main {
+            font-size: 3rem;
+            animation: pulse 1.5s infinite;
+            cursor: pointer;
+        }
+
+        p { font-size: 1.1rem; line-height: 1.8; margin: 18px 0; }
+        .highlight { color: #b23a48; font-weight: 600; }
+
+        button {
+            margin-top: 20px;
+            padding: 15px 40px;
+            border-radius: 40px;
+            border: none;
+            background: #f2cbd0;
+            color: #7a1f2a;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -6px -6px 12px rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+        }
+
+        button:hover { transform: scale(1.05); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #final { display: none; }
+    </style>
+</head>
+<body>
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="Christina_Perri_-_A_Thousand_Years_CeeNaija.com_.mp3" type="audio/mpeg">
+</audio>
+
+<div id="splash">
+    <div class="heart-main" onclick="openLetter()">🎁</div>
+    <p style="margin-top: 20px; font-weight: 500;">Bibi, you have a message...</p>
+    <p style="font-size: 0.8rem; opacity: 0.6;">(Tap the gift to open)</p>
+</div>
+
+<div class="scroll" id="letter">
+    <div class="heart-main">❤️</div>
+    <h1>Dear Bibi</h1>
+    <p>I’m writing this with a heart full of regret and so much love for you. I’m truly sorry for <span class="highlight">misunderstanding you</span>.</p>
+    <p>You deserve patience, understanding, and gentleness and I didn’t show enough of that.</p>
+    <p>Please know this, I value <span class="highlight">everything you do</span>. Your love, your effort, and your presence mean more to me than words can explain.</p>
+    <p>Hurting you was never my intention. I’m learning, growing, and choosing to be better  for us.</p>
+    <button onclick="showFinal()">Tap This ❤️</button>
+</div>
+
+<div class="scroll" id="final">
+    <h2 style="font-size: 3rem;">I Love You ❤️</h2>
+    <p>Today. Tomorrow. Always.</p>
+    <div style="margin-top: 40px; font-style: italic;">~ Darren</div>
+</div>
+
+<script>
+    const music = document.getElementById("bgMusic");
+
+    function openLetter() {
+        // Start Audio
+        music.volume = 0.5;
+        music.play();
+
+        // Hide Splash
+        document.getElementById("splash").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("splash").style.display = "none";
+            // Show Letter
+            const letter = document.getElementById("letter");
+            letter.style.display = "block";
+            letter.style.animation = "fadeIn 1.5s ease";
+        }, 1000);
+        
+        startFloating();
+    }
+
+    function showFinal() {
+        document.getElementById("letter").style.display = "none";
+        document.getElementById("final").style.display = "block";
+    }
+
+    function startFloating() {
+        const icons = ["❤️", "✨", "💖", "⭐"];
+        setInterval(() => {
+            const el = document.createElement("div");
+            el.className = "floating";
+            el.innerText = icons[Math.floor(Math.random() * icons.length)];
+            el.style.left = Math.random() * 100 + "vw";
+            const duration = 5 + Math.random() * 5;
+            el.style.animationDuration = duration + "s";
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), duration * 1000);
+        }, 600);
+    }
+</script>
+
+</body>
+</html>
